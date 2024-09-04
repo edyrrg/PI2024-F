@@ -14,4 +14,4 @@ RUN npm install
 COPY . .
 
 # Ejecuta Vite en modo desarrollo
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]

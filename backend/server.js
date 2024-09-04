@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
@@ -39,28 +41,28 @@ app.get('/users', (_req, res) => {
 
 // Crear un nuevo usuario
 app.post('/users', (req, res) => {
-  const { nombre, correo, telefono } = req.body;
-  const query = 'INSERT INTO users (nombre, correo, telefono) VALUES (?, ?, ?)';
-  db.query(query, [nombre, correo, telefono], (err, results) => {
+  const { full_name, email, phone_number } = req.body;
+  const query = 'INSERT INTO users (full_name, email, phone_number) VALUES (?, ?, ?)';
+  db.query(query, [full_name, email, phone_number], (err, results) => {
     if (err) {
       res.status(500).send(err);
       return;
     }
-    res.json({ id: results.insertId, nombre, correo, telefono });
+    res.json({ id: results.insertId, full_name, email, phone_number });
   });
 });
 
 // Actualizar un usuario
 app.put('/users/:id', (req, res) => {
   const { id } = req.params;
-  const { nombre, correo, telefono } = req.body;
-  const query = 'UPDATE users SET nombre = ?, correo = ?, telefono = ? WHERE id = ?';
-  db.query(query, [nombre, correo, telefono, id], (err) => {
+  const { full_name, email, phone_number } = req.body;
+  const query = 'UPDATE users SET full_name = ?, email = ?, phone_number = ? WHERE id = ?';
+  db.query(query, [full_name, email, phone_number, id], (err) => {
     if (err) {
       res.status(500).send(err);
       return;
     }
-    res.json({ id, nombre, correo, telefono });
+    res.json({ id, full_name, email, phone_number });
   });
 });
 
