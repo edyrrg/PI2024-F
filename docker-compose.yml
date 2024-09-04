@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # Servicio de la base de datos MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
+  # Servicio del backend en Node.js con Express
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: express-backend
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+
+  # Servicio del frontend en React con Vite
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vite-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
