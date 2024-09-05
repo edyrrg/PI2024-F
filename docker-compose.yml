@@ -18,7 +18,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: express-backend:latest
+    image: backend:latest
     container_name: express-backend
     env_file:
       - .env
@@ -34,7 +34,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    image: vite-frontend:latest
+    image: frontend:latest
     container_name: vite-frontend
     ports:
       - "8080:8080"
