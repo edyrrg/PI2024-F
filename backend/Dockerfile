@@ -5,7 +5,7 @@ FROM node:18
 WORKDIR /app
 
 # Instala dockerize
-ENV DOCKERIZE_VERSION v0.8.0
+ENV DOCKERIZE_VERSION=v0.8.0
 
 RUN apt-get update \
     && apt-get install -y wget \
